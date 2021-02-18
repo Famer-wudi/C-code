@@ -1,173 +1,183 @@
 #define _CRT_SECURE_NO_WARNINGS 1
-#include<string.h>
 #include<stdio.h>
+#include<stdlib.h>
 #include<assert.h>
-#include<assert.h>
-#include<errno.h>
-#include<ctype.h>
+#include<string.h>
 
-//int is_leftmove(char* str1, char* str2)
+/*
+动态内存分配，想开辟多大字节的空间就开辟多大字节的空间，
+
+内核空间 ： 操作系统的空间。
+
+内存的栈区 ： 局部变量，函数的形式参数。 离开栈区，生命周期就结束。
+
+内存的堆区 ： 动态内存开辟的空间，即内存块，
+
+静态区 ： 全局变量 ，静态变量。
+
+数据区 ： 常量，和运行时的数据。
+
+	malloc	free	calloc		realloc 
+
+*/
+//void* malloc(size_t size)
+
+//int main()
 //{
-//	//追加一个自己，包含了所有可能旋转的串。
-//	//再判断是否是自己的字串。
-//	//如果目的地字符串长度和源字符串长度不相等，那么肯定不是左旋得到的。
-//	int len1 = strlen(str1);
-//	int len2 = strlen(str2);
-//	if (len1 !=len2)
+//	int* p = (int*)malloc(5 * sizeof(int));
+//
+//	//int* p = (int*)malloc(INT_MAX);
+//
+//	//内存不足时，返回NULL；
+//	if (p==NULL)
 //	{
-//		return 0;
-//	}
-//	strncat(str1, str1, 6);
-//	//找子串，strstr,
-//	char* ret = strstr(str1, str2);
-//	if (ret==NULL)
-//	{
-//		return 0;
+//		printf("%s\n", strerror(errno));
 //	}
 //	else
 //	{
-//		return 1;
-//	}
-//}
-//
-//int main()
-//{
-//	char arr1[30] = "abcde";
-//	char arr2[] = "cde";
-//	int ret = is_leftmove(arr1, arr2);
-//	if (ret==1)
-//	{
-//		printf("yes\n");
-//	}
-//	else
-//	{
-//		printf("no\n");
-//	}
-//	return 0;
-//}
-
-		// 字符串比较，strncmp	参数 都是const ...
-//int main()
-//{
-//	const char* p1 = "abc";
-//	char* p2 = "abcd";
-//	int ret = strncmp(p1, p2,4);
-//	if (ret == 0)
-//	{
-//		printf("p1=p2\n");
-//	}
-//	else if (ret < 0)
-//	{
-//		printf("p2大\n");
-//	}
-//	return 0;
-//}
-
-//strstr 如果知道到了，就返回该找到的第一个字符串的位置。没找到就返回空指针。
-
-//如果从当前字符串比较没找到，那就从下一个字符的地址开始找。
-
-/* char* my_strstr(const char* p1, const char* p2)
-{
-	assert(p1 && p2);
-	char* s1 = p1;
-	char* s2 = p2;
-	char* cur = p1;
-	if (!(*p2))//为假就跳过去
-	{
-		return (char*)p1;
-	}
-	while (*cur)
-	{
-		s1 = cur;
-		s2 = p2;
-		while (*s2&&*s1&&!(s1-s2))// s1和s2不相等则循环停止。
-		{
-			s1++; s2++;
-		}
-		if (*s2=='\0')
-		{
-			return cur;
-		}
-		if(!(*s1))
-			return NULL;
-		cur++;
-	}							//为假，就跳过去。。为真，就进循环。
-	return NULL;//找不到子串。
-}*/
-
-		// strtok 
-//int main()
-//{
-//	char arr[] = "zpi@qqq.cc";
-//	//一般arr 用临时拷贝，传地址，将标记改为 \0 ，并记住其位置
-//	//第二次，传参 传空指针 ，从后面那个位置往后查找。
-//	char* p = "@.";
-//	//没有则返回NULL
-//	char buf[1024] = { 0 };
-//	strcpy(buf, arr);
-//	char* ret = NULL;
-//	//char* ret=strtok(arr, p);
-//	//printf("%s\n", ret);
-//	//ret = strtok(NULL, p);
-//	//printf("%s\n", ret);
-//
-//	//ip 地址是 点分十进制的表示方式 
-//
-//	for ((ret = strtok(arr, p)); ret != NULL; ret = strtok(NULL, p))
-//	{
-//		printf("%s\n",ret);
-//	}
-//	return 0;
-//}
-
-//	strerror	返回错误码，所对应的错误信息。
-//int main()
-//{
-//	//错误码，错误信息。
-////errno.h	是一个全局的错误的变量，
-////当C语言执行过程中发生了错误，会把对应的错误码 赋值到errno 中。
-//
-//	char* str = strerror(errno);
-//	printf("%s\n", str);
-//	
-//		//打开文件， r 读操作。
-//	FILE* pf = fopen("test.txt", "r");
-//	if (pf == NULL)
-//	{
-//		printf("%s\n", strerrno(errno));
-//	}
-//	return 0;
-//}
-
-//int main()
-//{
-//	//char ch = 'w';
-//	//int ret= islower(ch);
-//	////如果是小写，返回的是非0值。不是则返回0。
-//	//printf("%d\n", ret);
-//	//int ret = iswdigit(ch);
-//	////判断是否是0-9的数字。
-//
-//	////字符转换函数
-//	//int tolower(int c);//转小写，
-//
-//	//putchar(ch);//打印字符
-//
-//	//int toupper(int c);//转大写。ASCII 码值加32就是转大写。
-//
-//
-//	char arr[] = "I Am A Supperman";
-//	int i = 0;
-//	while (arr[i])
-//	{
-//		if (isupper(arr[i]))
+//		int i = 0;
+//		for ( i = 0; i < 5; i++)
 //		{
-//			arr[i] = tolower(arr[i]);
+//			*(p + i) = i;
 //		}
-//		i++;
+//		for ( i = 0; i < 5; i++)
+//		{
+//			printf("%d ", *(p + i));
+//		}
 //	}
-//	printf("%s\n", arr);
 //
+//	//当动态申请的空间不再使用的时候，要释放和回收。
+//	free(p);
+//	p = NULL;	//以防有人找到这个指针搞破坏。
+//
+//	//生命周期到了，程序结束，内存也会主动还回去。
+//
+//	//F9 断点	。		F5 直接跳到断点。
+//
+//	return 0;
+//}
+
+
+		//calloc
+
+ // void* calloc(size_t num,size_t size)
+//int main()
+//{
+////int* p = (int*)malloc(5 * sizeof(int));
+//
+//	int* p=(int*)calloc(5, sizeof(int));
+////会把申请的每个空间初始化为0.返回该内存的起始位置地址。
+//
+//	//返回失败同，malloc
+//	return 0;
+//}
+
+
+			// realloc 
+//int main()
+//{
+//	/*
+//	realloc 哪里闲着就开辟哪块儿，如果后面空间够用，追加上，就返回malloc的地址。
+//	
+//如果后面的空间不够用，开辟一个新的空间。
+//同时把那块儿空间的数据拷贝过来，原空间作废，返回新的地址。
+//要用新的地址接受，进行返回值判断以防开辟失败。
+//	*/
+//	int* p = (int*)malloc(5 * sizeof(int));
+//	if (p==NULL)
+//	{
+//		printf("%s\n", strerror(errno));
+//	}
+//	else
+//	{
+//		int i = 0;
+//		for ( i = 0; i < 5; i++)
+//		{
+//			*(p + i) = i;
+//		}
+//		for ( i = 0; i < 5; i++)
+//		{
+//			printf("%d ", *(p + i));
+//		}
+//	}
+//	//20个字节空间不够用 再来20个
+//	int* ptr = (int*)realloc(p, 40);
+//	if (ptr!=NULL)
+//	{
+//		p = ptr;
+//		int i = 0;
+//		for (i = 0; i < 10; i++)
+//		{
+//			*(p + i) = i;
+//		}
+//		for (i = 0; i < 10; i++)
+//				i<20  就会造成 对动态开辟的内存的越界访问。
+//		{
+//			printf("%d ", *(p + i));
+//		}
+//	}
+//	free(p);
+//	p = NULL;
+//				p++；free(p)	会出错。
+//
+//  多次释放，会崩死。。 谁申请谁回收。。
+//
+//
+//忘记释放则会内存泄漏。
+//while (1)
+//{
+//	malloc(1)
+//}
+// 形参出函数销毁。 会造成内存崩溃，存在内存泄漏，开辟的内存尚未释放，
+//return 0;
+//}
+
+/* 返回栈空间地址的问题 ，出函数销毁。 非法访问内存的问题。
+
+堆空间 和静态区都能返回去。
+*/
+
+	//柔性数组
+// struct S
+//{
+//	int i;
+//	int arr[0];
+//};				//结构体最后一个成员时 位置大小。数组的大小是可以调整的。
+//
+////那怎么开辟这个数组的空间呢。
+//int main()
+//{
+//	struct S* ps = (struct S*)malloc(sizeof(struct S) + 5 * sizeof(int));
+//	return 0;
+//}
+
+//struct S
+//{
+//	int i;
+//	int* arr;
+//};
+//
+//int main()
+//{
+//	struct S* ps = (struct S*)malloc(sizeof(struct S));
+//	ps->arr = malloc(5 * sizeof(int));
+//	int i = 0;
+//	for ( i = 0; i < 5; i++)
+//	{
+//		ps->arr[i] = i;
+//	}
+//	int* ptr=realloc(ps->arr,10*sizeof(int));
+//	if (ptr!=NULL)
+//	{
+//		ps->arr = ptr;
+//	}
+//	for (i = 5; i < 10; i++)
+//	{
+//		ps->arr[i] = i;
+//	}
+//	for ( i = 0; i < 10; i++)
+//	{
+//		printf("%d ", ps->arr[i]);
+//	}
 //	return 0;
 //}
