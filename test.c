@@ -1,153 +1,86 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS 1
-#include<stdlib.h>
 #include<stdio.h>
+#include<stdlib.h>
+ /*
+ 给你两个有序整数数组 nums1 和 nums2，请你将 nums2 合并到 nums1 中，使 nums1 成为一个有序数组。
+初始化 nums1 和 nums2 的元素数量分别为 m 和 n 。你可以假设 nums1 的空间大小等于 m + n，
+这样它就有足够的空间保存来自 nums2 的元素。
 
-
-//消失的数字。 一个数组0-n,消失了一个数，找到那个数。
-//int missingNumber(int* nums, int numsSize) {
-//    int ret = 0;
-//    int i = 0;
-//    for (i = 0; i < numsSize; ++i)
-//    {
-//        ret = ret ^ nums[i];
-//    }
-//    for (i = 0; i <=numsSize; ++i)
-//    {
-//        ret = ret ^ nums[i];
-//    }
-//    return ret;
-//}
-
-/*
-给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度。
-
-不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。
-
-元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。
-
-来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/remove-element
+链接：https://leetcode-cn.com/problems/merge-sorted-array
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-*/
-//
-//int removeElement(int* nums, int numsSize, int val) {
-//    int src = 0; int dst = 0;
-//    while (src < numsSize)
-//    {
-//        if (nums[src] != val)
-//        {
-//            nums[dst] = nums[src];
-//            ++src;
-//            ++dst;
-//        }
-//        else
-//        {
-//            ++src;
-//        }
-//    }
-//    return dst;
-//}
-
-
-//给定一个排序数组，你需要在 原地 删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。
-//
-//不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。
-//
-//来源：力扣（LeetCode）
-//链接：https :cn.com/problems/remove-duplicates-from-sorted-array
-//著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-
+ 
+ */
 /*
-int removeDuplicates(int* nums, int numsSize){
-if(numsSize==0)
-    return 0;
-int prev=0;int cur=1;int dst=0;
-while(cur<numsSize)
-{
-    if(nums[prev]!=nums[cur])
+把数组2拷贝到数组一上去，再进行排序。
+时间复杂度：O(M+N*log(M+N))
+
+void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n){
+    int* tmp=(int*)malloc(sizeof(int)*(m+n));
+    int i1=0;int i2=0;
+    int i=0;
+    while(i1<m&&i2<n)
     {
-        nums[dst]=nums[prev];
-        ++dst;
-        ++cur;
-        ++prev;
-    }
-    else{
-        ++cur;
-        ++prev;
-    }
-}
- nums[dst]=nums[prev];
-    dst++;
-    prev++;
-return dst;
-}
-*/
-
-
-/*
-对于非负整数 X 而言，X 的数组形式是每位数字按从左到右的顺序形成的数组。例如，如果 X = 1231，那么其数组形式为 [1,2,3,1]。
-
-给定非负整数 X 的数组形式 A，返回整数 X+K 的数组形式。
-
-来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/add-to-array-form-of-integer
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-*/
-void nixu(int* arr,int x)
-{
-    int left = 0; int right = x - 1;
-    while (left<right)
-    {
-        int tmp = arr[left];
-        arr[left] = arr[right];
-        arr[right] = tmp;
-        left++; right++;
-    }
-}
-
-int* addToArryForm(int* A,int Asize,int k,int* returnsize)
-{
-    int ksize = 0;
-    int kunm = k;//123
-    while (kunm)
-    {
-        ksize++;
-        kunm /=10;
-    }
-    int len = Asize > ksize ? Asize : ksize;
-    int jinwei = 0;
-    int ai = Asize - 1;
-    int ri = 0;
-    int* retArry = (int*)malloc(sizeof(int) * (len + 1));
-    int ret = 0;
-    while (len--)
-    {
-        int a = 0;
-        if (ai >= 0)
+        if(nums1[i1]<nums2[i2])
         {
-            a = A[ai];
-            ai--;
-        }
-        ret = a+ k % 10 + jinwei;
-        k /= 10;
-        if (ret>=10)
-        {
-            ret -= 10;
-            int jinwei = 1;
+            tmp[i]=nums1[i1];
+            i1++;
+            i++;
         }
         else
         {
-            int jinwei = 0;
+            tmp[i]=nums2[i2];
+            i2++;
+            i++;
         }
-        retArry[ri] = ret;
-        ri++;
     }
-    if (jinwei==1)
+    while(i1<m)
     {
-        retArry[ri] = jinwei;
+        tmp[i]=nums1[i1];
+        i++;i1++;
     }
-    //逆序一下
-    nixu(retArry,ri);
-    return retArry;
-    *returnsize = ri;
+    while(i2<n)
+    {
+        tmp[i]=nums2[i2];
+        i++;i2++;
+    }
+    memcpy(nums1,tmp,sizeof(int)*(m+n));
+    free(tmp);
 }
+*/
+
+
+/*
+给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
+进阶：
+尽可能想出更多的解决方案，至少有三种不同的方法可以解决这个问题。
+你可以使用空间复杂度为 O(1) 的 原地 算法解决这个问题吗？
+
+链接：https://leetcode-cn.com/problems/rotate-array
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+*/
+/*
+1,开辟K大小的临时数组，后k个和前K个互换一下， 时间复杂度O N  空间复杂度 O K
+
+2,每次旋转一次，保存最后一个，前n-1个数依次往后挪动，最后一个数放到第一个位置去。旋转K次
+时间复杂度O（N*K）
+
+3,前n-k个逆置，后k个逆置，整体逆置。 时间复杂度O（N） 空间复杂度0（1）
+
+void reverse(int*nums,int left,int right)
+{
+    while(left<right)
+    {
+        int tmp=nums[left];
+        nums[left]=nums[right];
+        nums[right]=tmp;
+        ++left;--right;
+    }
+}
+
+void rotate(int* nums, int numsSize, int k){
+    k%=numsSize;
+reverse(nums,0,numsSize-k-1);
+reverse(nums,numsSize-k,numsSize-1);
+reverse(nums,0,numsSize-1);
+}
+*/
